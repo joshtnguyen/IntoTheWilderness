@@ -13,8 +13,8 @@ import main.GamePanel;
 
 public class BlockManager {
 	
-	final int heightLimit = Integer.parseInt(FileManager.getOption("options/mapoptions.txt", "heightLimit")); // Total Map Height Block Limit
-	final int widthLimit = Integer.parseInt(FileManager.getOption("options/mapoptions.txt", "widthLimit")); // Total Map Width Block Limit
+	public final int heightLimit = Integer.parseInt(FileManager.getOption("options/mapoptions.txt", "heightLimit")); // Total Map Height Block Limit
+	public final int widthLimit = Integer.parseInt(FileManager.getOption("options/mapoptions.txt", "widthLimit")); // Total Map Width Block Limit
 	final int scale = Integer.parseInt(FileManager.getOption("options/mapoptions.txt", "scale"));
 	final int blockSize = Integer.parseInt(FileManager.getOption("options/mapoptions.txt", "originalBlockSize")) * scale;
 	final int renderDistance = Integer.parseInt(FileManager.getOption("options/mapoptions.txt", "renderDistance"));
@@ -22,8 +22,8 @@ public class BlockManager {
 	final int screenHeight = Integer.parseInt(FileManager.getOption("options/mapoptions.txt", "screenHeight"));
 	
 	GamePanel gp;
-	Block[] block;
-	int[][] world = new int[widthLimit][heightLimit];
+	public Block[] block;
+	public int[][] world = new int[widthLimit][heightLimit];
 	int[][] rendered = new int[renderDistance][renderDistance];
 	
 	public BlockManager(GamePanel gp) {
@@ -41,7 +41,6 @@ public class BlockManager {
 		}
 		for (int i = 0; i < widthLimit; i ++) {
 			world[i][131] = 2;
-			world[i][0] = 2;
 		}
 		
 		getBlockImage();
@@ -54,12 +53,17 @@ public class BlockManager {
 			
 			block[0] = new Block();
 			block[0].image = ImageIO.read(getClass().getResourceAsStream("/blocks/air.png"));
+			block[0].name = "Air";
 			
 			block[1] = new Block();
 			block[1].image = ImageIO.read(getClass().getResourceAsStream("/blocks/grass.png"));
+			block[1].collision = true;
+			block[1].name = "Grass";
 			
 			block[2] = new Block();
 			block[2].image = ImageIO.read(getClass().getResourceAsStream("/blocks/dirt.png"));
+			block[2].collision = true;
+			block[2].name = "Dirt";
 			
 		} catch (IOException e) {
 			
@@ -79,9 +83,7 @@ public class BlockManager {
 		
 		int displacementX = p.x % blockSize;
 		int displacementY = p.y % blockSize;
-		
-		System.out.println(bx + " / " + by);
-		
+				
 		for (int y = 0; y < renderDistance; y++) {
 			
 			for (int x = 0; x < renderDistance; x++) {
@@ -103,13 +105,14 @@ public class BlockManager {
 			
 		}
 		
-		for (int y = 0; y < renderDistance; y++) {
+		// TEXT COORDINATES
+		/*for (int y = 0; y < renderDistance; y++) {
 			String t = "";
 			for (int x = 0; x < renderDistance; x++) {
 				t += rendered[x][y] + " ";
 			}
 			System.out.println(t);
-		}
+		}*/
 		
 		
 	}

@@ -28,10 +28,12 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	// FPS
 	int FPS = 120;
+	int currentFPS;
 	
 	BlockManager blockW = new BlockManager(this);
 	KeyHandler keyH = new KeyHandler();
 	Thread gameThread;
+	public CollisionChecker cChecker = new CollisionChecker(this);
 	Player player = new Player(this, keyH);
 	
 	
@@ -77,7 +79,7 @@ public class GamePanel extends JPanel implements Runnable {
 			}
 			
 			if (timer >= 1000000000) {
-				System.out.println("FPS: " + drawCount + "\nx: " + player.x / blockSize + "\ny: " + player.y / blockSize);
+				currentFPS = drawCount;
 				drawCount = 0;
 				timer = 0;
 			}
@@ -100,6 +102,23 @@ public class GamePanel extends JPanel implements Runnable {
 		
 		blockW.draw(g2, player);
 		player.draw(g2);
+		
+		
+		if (keyH.f3Pressed) {
+			int debugX = 16;
+			int debugY = 12;
+			
+			g.drawString("FPS: " + currentFPS, debugX, debugY += 12);
+			g.drawString("Pixel Map x: " + player.x, debugX, debugY += 12);
+			g.drawString("Pixel Map y: " + player.y, debugX, debugY += 12);
+			g.drawString("Block Map x: " + player.x / blockSize, debugX, debugY += 12);
+			g.drawString("Block Map y: " + player.y / blockSize, debugX, debugY += 12);
+			g.drawString("Pixel Map x: " + player.x, debugX, debugY += 12);
+			g.drawString("Pixel Map y: " + player.y, debugX, debugY += 12);
+			g.drawString("Block Map x: " + ((player.x / blockSize) - (blockW.widthLimit / 2)), debugX, debugY += 12);
+			g.drawString("Block Map y: " + (blockW.heightLimit - (player.y / blockSize)), debugX, debugY += 12);
+		}
+		
 		
 		g2.dispose();
 		

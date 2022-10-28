@@ -6,5 +6,6 @@ public class Block {
 	
 	public BufferedImage image;
 	public boolean collision = false;
+	public String name;
 
 }

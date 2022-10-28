@@ -1,6 +1,7 @@
 package entity;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -30,7 +31,7 @@ public class Player extends Entity {
 	
 	public void setDefaultValues() {
 		
-		speed = 2;
+		speed = 4;
 		hb_w = 10;
 		hb_h = 30;
 		int scale = Integer.parseInt(FileManager.getOption("options/mapoptions.txt", "scale"));
@@ -40,6 +41,8 @@ public class Player extends Entity {
 		direction = "right";
 		x = Integer.parseInt(FileManager.getOption("options/mapoptions.txt", "widthLimit")) / 2 * scale * blockSize;
 		y = Integer.parseInt(FileManager.getOption("options/mapoptions.txt", "heightLimit")) / 2 * scale * blockSize;
+		
+		solidArea = new Rectangle(0, 0, hb_w, hb_h);
 
 		
 	}
@@ -64,7 +67,7 @@ public class Player extends Entity {
 	}
 	
 	public void update() {
-		
+				
 		if (keyH.upPressed == true) {
 			y -= speed;
 		}
@@ -74,21 +77,36 @@ public class Player extends Entity {
 		}
 		
 		if (keyH.leftPressed == true) {
-			x -= speed;
 			direction = "left";
+			x -= speed;
 		}
 		
 		if (keyH.rightPressed == true) {
-			x += speed;
 			direction = "right";
+			x += speed;
 		}
 		
 		if (keyH.spacePressed == true) {
 			interact = true;
-			speed = 8;
+			speed = 16;
 		} else {
 			interact = false;
 			speed = 2;
+		}
+		
+		// CHECK COLLISION
+		collisionOn = false;
+		gp.cChecker.checkBlock(this);
+		
+		if (collisionOn) {
+			switch(direction) {
+			case "left":
+				x += speed;
+				break;
+			case "right":
+				x -= speed;
+				break;
+			}
 		}
 		
 		spriteCounter++;
@@ -135,7 +153,7 @@ public class Player extends Entity {
 		
 		if (interact) {
 			if (spriteNumber == 1 || spriteNumber == 3) {
-				visual_y += 2;
+				visual_y -= 2;
 			}
 		}
 		

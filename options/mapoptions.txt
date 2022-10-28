@@ -6,5 +6,5 @@ maxScreenRow: 12
 screenWidth: 1280
 screenHeight: 720
 heightLimit: 256
-widthLimit: 1024
+widthLimit: 2048
 renderDistance: 30
