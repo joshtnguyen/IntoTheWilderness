@@ -1,7 +1,10 @@
 FILE NAME: mapoptions
-originalTileSize = 16
-scale = 4
-maxScreenCol = 20
-maxScreenRow = 12
-heightLimit = 256
-widthLimit = 1024
+originalBlockSize: 16
+scale: 4
+maxScreenCol: 20
+maxScreenRow: 12
+screenWidth: 1280
+screenHeight: 720
+heightLimit: 256
+widthLimit: 1024
+renderDistance: 30

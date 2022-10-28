@@ -1,9 +1,12 @@
 package main;
 
+import java.io.FileNotFoundException;
+
 import java.awt.Dimension;
 import java.awt.Color;
 import javax.swing.JPanel;
 
+import block.BlockManager;
 import entity.Player;
 
 import java.awt.Graphics;
@@ -13,28 +16,29 @@ import java.awt.Graphics2D;
 public class GamePanel extends JPanel implements Runnable {
 	
 	// SCREEN SETTINGS
-	final int originalTileSize = 16; // 16x16 tile
-	final int scale = 4;
+	final int originalBlockSize = Integer.parseInt(FileManager.getOption("options/mapoptions.txt", "originalBlockSize")); // 16x16 block
+	public final int scale = Integer.parseInt(FileManager.getOption("options/mapoptions.txt", "scale"));
 	
-	final int tileSize = originalTileSize * scale; // 64x64 tile
-	final int maxScreenCol = 20;
-	final int maxScreenRow = 12;
-	final int screenWidth = tileSize *  maxScreenCol; // 1280 pixels
-	final int screenHeight = tileSize * maxScreenRow; // 768 pixels
+	
+	final int blockSize = originalBlockSize * scale; // 64x64 block
+	final int maxScreenCol = Integer.parseInt(FileManager.getOption("options/mapoptions.txt", "maxScreenCol"));
+	final int maxScreenRow = Integer.parseInt(FileManager.getOption("options/mapoptions.txt", "maxScreenRow"));
+	final int screenWidth = Integer.parseInt(FileManager.getOption("options/mapoptions.txt", "screenWidth"));
+	final int screenHeight = Integer.parseInt(FileManager.getOption("options/mapoptions.txt", "screenHeight"));
 	
 	// FPS
 	int FPS = 120;
 	
+	BlockManager blockW = new BlockManager(this);
 	KeyHandler keyH = new KeyHandler();
 	Thread gameThread;
 	Player player = new Player(this, keyH);
 	
-	public 
 	
 	public GamePanel() {
 		
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
-		this.setBackground(Color.black);
+		this.setBackground(Color.red);
 		this.setDoubleBuffered(true);
 		this.addKeyListener(keyH);
 		this.setFocusable(true);
@@ -73,7 +77,7 @@ public class GamePanel extends JPanel implements Runnable {
 			}
 			
 			if (timer >= 1000000000) {
-				System.out.println("FPS: " + drawCount);
+				System.out.println("FPS: " + drawCount + "\nx: " + player.x / blockSize + "\ny: " + player.y / blockSize);
 				drawCount = 0;
 				timer = 0;
 			}
@@ -84,7 +88,7 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	public void update() {
 		
-		
+		player.update();
 		
 	}
 	
@@ -93,6 +97,9 @@ public class GamePanel extends JPanel implements Runnable {
 		super.paintComponent(g);
 		
 		Graphics2D g2 = (Graphics2D) g;
+		
+		blockW.draw(g2, player);
+		player.draw(g2);
 		
 		g2.dispose();
 		
