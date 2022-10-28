@@ -1,0 +1,7 @@
+FILE NAME: mapoptions
+originalTileSize = 16
+scale = 4
+maxScreenCol = 20
+maxScreenRow = 12
+heightLimit = 256
+widthLimit = 1024
