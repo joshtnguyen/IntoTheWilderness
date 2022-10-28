@@ -34,6 +34,7 @@ public class BlockManager {
 		for (int i = 0; i < widthLimit; i += 2) {
 			if (i % 4 == 0) {
 				world[i][130] = 2;
+				world[i][125] = 2;
 			} else {
 				world[i][130] = 1;
 			}
@@ -41,6 +42,9 @@ public class BlockManager {
 		}
 		for (int i = 0; i < widthLimit; i ++) {
 			world[i][131] = 2;
+		}
+		for (int i = 0; i < heightLimit; i ++) {
+			world[1024][i] = 2;
 		}
 		
 		getBlockImage();

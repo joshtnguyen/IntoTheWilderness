@@ -20,7 +20,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public final int scale = Integer.parseInt(FileManager.getOption("options/mapoptions.txt", "scale"));
 	
 	
-	final int blockSize = originalBlockSize * scale; // 64x64 block
+	public final int blockSize = originalBlockSize * scale; // 64x64 block
 	final int maxScreenCol = Integer.parseInt(FileManager.getOption("options/mapoptions.txt", "maxScreenCol"));
 	final int maxScreenRow = Integer.parseInt(FileManager.getOption("options/mapoptions.txt", "maxScreenRow"));
 	final int screenWidth = Integer.parseInt(FileManager.getOption("options/mapoptions.txt", "screenWidth"));
@@ -104,7 +104,7 @@ public class GamePanel extends JPanel implements Runnable {
 		player.draw(g2);
 		
 		
-		if (keyH.f3Pressed) {
+		//if (keyH.f3Pressed) {
 			int debugX = 16;
 			int debugY = 12;
 			
@@ -113,11 +113,9 @@ public class GamePanel extends JPanel implements Runnable {
 			g.drawString("Pixel Map y: " + player.y, debugX, debugY += 12);
 			g.drawString("Block Map x: " + player.x / blockSize, debugX, debugY += 12);
 			g.drawString("Block Map y: " + player.y / blockSize, debugX, debugY += 12);
-			g.drawString("Pixel Map x: " + player.x, debugX, debugY += 12);
-			g.drawString("Pixel Map y: " + player.y, debugX, debugY += 12);
-			g.drawString("Block Map x: " + ((player.x / blockSize) - (blockW.widthLimit / 2)), debugX, debugY += 12);
-			g.drawString("Block Map y: " + (blockW.heightLimit - (player.y / blockSize)), debugX, debugY += 12);
-		}
+			g.drawString("Game Block Map x: " + ((player.x / blockSize) - (blockW.widthLimit / 2)), debugX, debugY += 12);
+			g.drawString("Game Block Map y: " + (blockW.heightLimit - (player.y / blockSize)), debugX, debugY += 12);
+		//}
 		
 		
 		g2.dispose();

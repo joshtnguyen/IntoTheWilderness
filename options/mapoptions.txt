@@ -7,4 +7,4 @@ screenWidth: 1280
 screenHeight: 720
 heightLimit: 256
 widthLimit: 2048
-renderDistance: 30
+renderDistance: 24

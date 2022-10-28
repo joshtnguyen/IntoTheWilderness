@@ -1,10 +1,13 @@
 package main;
 
+import block.BlockManager;
 import entity.Entity;
 
 public class CollisionChecker {
 	
 	GamePanel gp;
+	int heightLimit = Integer.parseInt(FileManager.getOption("options/mapoptions.txt", "heightLimit"));
+	int widthLimit = Integer.parseInt(FileManager.getOption("options/mapoptions.txt", "widthLimit"));
 	
 	public CollisionChecker(GamePanel gp) {
 		
@@ -14,34 +17,55 @@ public class CollisionChecker {
 	
 	public void checkBlock(Entity entity) {
 		
-		int entityLeftX = entity.x - entity.hb_w * gp.scale / 2;
-		int entityRightX = entity.x + entity.hb_w * gp.scale / 2;
-		int entityTopY = entity.y + entity.hb_h * gp.scale / 2;
+		int entityLeftX = entity.x - entity.hb_w;
+		int entityRightX = entity.x + entity.hb_w;
+		int entityTopY = entity.y - entity.hb_h * gp.scale / 2;
 		int entityBottomY = entity.y + entity.hb_h * gp.scale / 2;
+		int entityMiddleY = entity.y;
 		
 		int entityLeftCol = entityLeftX/gp.blockSize;
 		int entityRightCol = entityRightX/gp.blockSize;
 		int entityTopRow = entityTopY/gp.blockSize;
 		int entityBottomRow = entityBottomY/gp.blockSize;
+		int entityMiddleRow = entityMiddleY/gp.blockSize;
 		
-		int block1, block2;
+		int block1 = 0;
+		int block2 = 0;
+		int block3 = 0;
 		
 		switch(entity.direction) {
 		case "left":
-			entityLeftCol = (entityLeftX - entity.speed) / gp.blockSize;
-			block1 = gp.blockW.world[entityLeftCol][entityTopRow];
-			block2 = gp.blockW.world[entityLeftCol][entityBottomRow];
-			if(gp.blockW.block[block1].collision == true || gp.blockW.block[block2].collision == true) {
-				entity.collisionOn = true;
+			//entityLeftCol = (entityLeftX - entity.speed) / gp.blockSize;
+			if (entityLeftCol >= 0 && entityLeftCol < widthLimit) {
+				if (entityTopRow >= 0 && entityTopRow < heightLimit) {
+					block1 = gp.blockW.world[entityLeftCol][entityTopRow];
+				}
+				if (entityBottomRow >= 0 && entityBottomRow < heightLimit) {
+					block2 = gp.blockW.world[entityLeftCol][entityBottomRow];
+				}
+				if (entityMiddleRow >= 0 && entityMiddleRow < heightLimit) {
+					block3 = gp.blockW.world[entityLeftCol][entityMiddleRow];
+				}
+				if(gp.blockW.block[block1].collision == true || gp.blockW.block[block2].collision == true || gp.blockW.block[block3].collision == true) {
+					entity.collisionOn = true;
+				}
 			}
 			break;
 		case "right":
-			entityRightCol = (entityRightX - entity.speed) / gp.blockSize;
-			block1 = gp.blockW.world[entityRightCol][entityTopRow];
-			block2 = gp.blockW.world[entityRightCol][entityBottomRow];
-			System.out.println(block1);
-			if(gp.blockW.block[block1].collision == true || gp.blockW.block[block2].collision == true) {
-				entity.collisionOn = true;
+			//entityRightCol = (entityRightX - entity.speed) / gp.blockSize;
+			if (entityRightCol >= 0 && entityRightCol < widthLimit) {
+				if (entityTopRow >= 0 && entityTopRow < heightLimit) {
+					block1 = gp.blockW.world[entityRightCol][entityTopRow];
+				}
+				if (entityBottomRow >= 0 && entityBottomRow < heightLimit) {
+					block2 = gp.blockW.world[entityRightCol][entityBottomRow];
+				}
+				if (entityMiddleRow >= 0 && entityMiddleRow < heightLimit) {
+					block3 = gp.blockW.world[entityRightCol][entityMiddleRow];
+				}
+				if(gp.blockW.block[block1].collision == true || gp.blockW.block[block2].collision == true || gp.blockW.block[block3].collision == true) {
+					entity.collisionOn = true;
+				}
 			}
 			break;
 		}
