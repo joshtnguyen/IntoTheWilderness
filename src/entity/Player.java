@@ -18,6 +18,7 @@ public class Player extends Entity {
 	private int center_x;
 	private int center_y;
 	private boolean interact = false;
+	private boolean moving = false;
 
 	public Player(GamePanel gp, KeyHandler keyH) {
 		
@@ -68,6 +69,8 @@ public class Player extends Entity {
 	
 	public void update() {
 				
+		moving = false;
+		
 		if (keyH.upPressed == true) {
 			y -= speed;
 		}
@@ -78,20 +81,25 @@ public class Player extends Entity {
 		
 		if (keyH.leftPressed == true) {
 			direction = "left";
-			x -= speed;
+			moving = true;
 		}
 		
 		if (keyH.rightPressed == true) {
 			direction = "right";
-			x += speed;
+			moving = true;
 		}
 		
 		if (keyH.spacePressed == true) {
 			interact = true;
-			speed = 16;
+			speed = 8;
 		} else {
 			interact = false;
 			speed = 2;
+		}
+		
+		if (gp.cChecker.isOnGround(this)) {
+			y = y / gp.blockSize * gp.blockSize + 3;
+			//System.out.println("true");
 		}
 		
 		// CHECK COLLISION
@@ -101,10 +109,19 @@ public class Player extends Entity {
 		if (collisionOn) {
 			switch(direction) {
 			case "left":
-				x += speed;
+				x = x / gp.blockSize * gp.blockSize + hb_w;
 				break;
 			case "right":
+				x = x / gp.blockSize * gp.blockSize + 67 - hb_w;
+				break;
+			}
+		} else if (moving) {
+			switch (direction) {
+			case "left":
 				x -= speed;
+				break;
+			case "right":
+				x += speed;
 				break;
 			}
 		}

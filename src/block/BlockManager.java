@@ -30,7 +30,7 @@ public class BlockManager {
 		
 		this.gp = gp;
 		
-		block = new Block[3];
+		block = new Block[64];
 		for (int i = 0; i < widthLimit; i += 2) {
 			if (i % 4 == 0) {
 				world[i][130] = 2;
@@ -42,6 +42,7 @@ public class BlockManager {
 		}
 		for (int i = 0; i < widthLimit; i ++) {
 			world[i][131] = 2;
+			world[i][132] = 3;
 		}
 		for (int i = 0; i < heightLimit; i ++) {
 			world[1024][i] = 2;
@@ -68,6 +69,11 @@ public class BlockManager {
 			block[2].image = ImageIO.read(getClass().getResourceAsStream("/blocks/dirt.png"));
 			block[2].collision = true;
 			block[2].name = "Dirt";
+			
+			block[3] = new Block();
+			block[3].image = ImageIO.read(getClass().getResourceAsStream("/blocks/stone.png"));
+			block[3].collision = true;
+			block[3].name = "Stone";
 			
 		} catch (IOException e) {
 			

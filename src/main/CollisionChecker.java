@@ -1,6 +1,5 @@
 package main;
 
-import block.BlockManager;
 import entity.Entity;
 
 public class CollisionChecker {
@@ -12,6 +11,44 @@ public class CollisionChecker {
 	public CollisionChecker(GamePanel gp) {
 		
 		this.gp = gp;
+		
+	}
+	
+	public boolean isOnGround(Entity entity) {
+		
+		int entityLeftX = entity.x - entity.hb_w;
+		int entityRightX = entity.x + entity.hb_w;
+		int entityMiddleX = entity.x;
+		int entityBottomY = entity.y + entity.hb_h * gp.scale / 2;
+		
+		int entityLeftCol = entityLeftX/gp.blockSize;
+		int entityRightCol = entityRightX/gp.blockSize;
+		int entityMiddleCol = entityMiddleX/gp.blockSize;
+		int entityBottomRow = entityBottomY/gp.blockSize;
+		
+		int block1 = 0;
+		int block2 = 0;
+		int block3 = 0;
+		
+		if (entity.velocityY <= 0) {
+			entityBottomRow = (entityBottomY - 1) / gp.blockSize;
+			if (entityBottomRow >= 0 && entityBottomRow < heightLimit) {
+				if (entityLeftCol >= 0 && entityLeftCol < widthLimit) {
+					block1 = gp.blockW.world[entityLeftCol][entityBottomRow];
+				}
+				if (entityRightCol >= 0 && entityRightCol < heightLimit) {
+					block2 = gp.blockW.world[entityRightCol][entityBottomRow];
+				}
+				if (entityMiddleCol >= 0 && entityMiddleCol < heightLimit) {
+					block3 = gp.blockW.world[entityMiddleCol][entityBottomRow];
+				}
+				if (gp.blockW.block[block1].collision == true || gp.blockW.block[block2].collision == true || gp.blockW.block[block3].collision == true) {
+					return true;
+				}
+			}
+		}
+		
+		return false;
 		
 	}
 	
@@ -35,7 +72,7 @@ public class CollisionChecker {
 		
 		switch(entity.direction) {
 		case "left":
-			//entityLeftCol = (entityLeftX - entity.speed) / gp.blockSize;
+			entityLeftCol = (entityLeftX - 1) / gp.blockSize;
 			if (entityLeftCol >= 0 && entityLeftCol < widthLimit) {
 				if (entityTopRow >= 0 && entityTopRow < heightLimit) {
 					block1 = gp.blockW.world[entityLeftCol][entityTopRow];
@@ -52,7 +89,7 @@ public class CollisionChecker {
 			}
 			break;
 		case "right":
-			//entityRightCol = (entityRightX - entity.speed) / gp.blockSize;
+			entityRightCol = (entityRightX - 1) / gp.blockSize;
 			if (entityRightCol >= 0 && entityRightCol < widthLimit) {
 				if (entityTopRow >= 0 && entityTopRow < heightLimit) {
 					block1 = gp.blockW.world[entityRightCol][entityTopRow];
