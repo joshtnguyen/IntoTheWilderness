@@ -8,4 +8,4 @@ screenHeight: 720
 heightLimit: 256
 widthLimit: 2048
 renderDistance: 24
-gravityConstant: 8
+gravityConstant: 7

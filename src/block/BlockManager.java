@@ -31,21 +31,25 @@ public class BlockManager {
 		this.gp = gp;
 		
 		block = new Block[64];
-		for (int i = 0; i < widthLimit; i += 2) {
-			if (i % 4 == 0) {
+		for (int i = 0; i < widthLimit; i++) {
+			world[i][131] = 2;
+			world[i][132] = 3;
+		}
+		for (int i = 0; i < widthLimit; i++) {
+			if (i % 7 == 0) {
 				world[i][130] = 2;
-				world[i][125] = 2;
+				world[i][129] = 2;
+				world[i][128] = 1;
 			} else {
 				world[i][130] = 1;
 			}
 			
 		}
-		for (int i = 0; i < widthLimit; i ++) {
-			world[i][131] = 2;
-			world[i][132] = 3;
+		for (int i = 0; i < widthLimit; i += 6) {
+			world[i][125] = 3;
 		}
 		for (int i = 0; i < heightLimit; i ++) {
-			world[1024][i] = 2;
+			world[1025][i] = 0;
 		}
 		
 		getBlockImage();

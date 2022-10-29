@@ -17,7 +17,7 @@ public class CollisionChecker {
 	public boolean isOnGround(Entity entity) {
 		
 		int entityLeftX = entity.x - entity.hb_w;
-		int entityRightX = entity.x + entity.hb_w;
+		int entityRightX = entity.x + entity.hb_w - 4;
 		int entityMiddleX = entity.x;
 		int entityBottomY = entity.y + entity.hb_h * gp.scale / 2;
 		
@@ -31,15 +31,15 @@ public class CollisionChecker {
 		int block3 = 0;
 		
 		if (entity.velocityY <= 0) {
-			entityBottomRow = (entityBottomY - 1) / gp.blockSize;
+			entityBottomRow = (entityBottomY + 2) / gp.blockSize;
 			if (entityBottomRow >= 0 && entityBottomRow < heightLimit) {
 				if (entityLeftCol >= 0 && entityLeftCol < widthLimit) {
 					block1 = gp.blockW.world[entityLeftCol][entityBottomRow];
 				}
-				if (entityRightCol >= 0 && entityRightCol < heightLimit) {
+				if (entityRightCol >= 0 && entityRightCol < widthLimit) {
 					block2 = gp.blockW.world[entityRightCol][entityBottomRow];
 				}
-				if (entityMiddleCol >= 0 && entityMiddleCol < heightLimit) {
+				if (entityMiddleCol >= 0 && entityMiddleCol < widthLimit) {
 					block3 = gp.blockW.world[entityMiddleCol][entityBottomRow];
 				}
 				if (gp.blockW.block[block1].collision == true || gp.blockW.block[block2].collision == true || gp.blockW.block[block3].collision == true) {
@@ -57,7 +57,7 @@ public class CollisionChecker {
 		int entityLeftX = entity.x - entity.hb_w;
 		int entityRightX = entity.x + entity.hb_w;
 		int entityTopY = entity.y - entity.hb_h * gp.scale / 2;
-		int entityBottomY = entity.y + entity.hb_h * gp.scale / 2;
+		int entityBottomY = entity.y + entity.hb_h * gp.scale / 2 - 5;
 		int entityMiddleY = entity.y;
 		
 		int entityLeftCol = entityLeftX/gp.blockSize;

@@ -42,6 +42,7 @@ public class Player extends Entity {
 		direction = "right";
 		x = Integer.parseInt(FileManager.getOption("options/mapoptions.txt", "widthLimit")) / 2 * scale * blockSize;
 		y = Integer.parseInt(FileManager.getOption("options/mapoptions.txt", "heightLimit")) / 2 * scale * blockSize;
+		jumpVelocity = 8;
 		
 		solidArea = new Rectangle(0, 0, hb_w, hb_h);
 
@@ -65,6 +66,15 @@ public class Player extends Entity {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public void applyGravity() {
+		fallingTime++;
+		y -= velocityY;
+		velocityY -= fallingTime / 15;
+		if (velocityY <= -1 * gp.gravityConstant) {
+			velocityY = -1 * gp.gravityConstant;
+		}
 	}
 	
 	public void update() {
@@ -91,15 +101,22 @@ public class Player extends Entity {
 		
 		if (keyH.spacePressed == true) {
 			interact = true;
-			speed = 8;
+			//speed = 8;
 		} else {
 			interact = false;
-			speed = 2;
+			//speed = 2;
 		}
 		
 		if (gp.cChecker.isOnGround(this)) {
-			y = y / gp.blockSize * gp.blockSize + 3;
-			//System.out.println("true");
+			y = y / gp.blockSize * gp.blockSize + 1;
+			velocityY = 0;
+			fallingTime = 0;
+			if (interact) {
+				velocityY = jumpVelocity;
+				applyGravity();
+			}
+		} else {
+			applyGravity();
 		}
 		
 		// CHECK COLLISION

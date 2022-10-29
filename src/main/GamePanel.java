@@ -30,6 +30,8 @@ public class GamePanel extends JPanel implements Runnable {
 	int FPS = 120;
 	int currentFPS;
 	
+	public final int gravityConstant = Integer.parseInt(FileManager.getOption("options/mapoptions.txt", "gravityConstant"));
+	
 	BlockManager blockW = new BlockManager(this);
 	KeyHandler keyH = new KeyHandler();
 	Thread gameThread;
